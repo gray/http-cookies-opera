@@ -9,7 +9,7 @@ use Carp qw(carp croak);
 our $VERSION = '0.01';
 $VERSION = eval $VERSION;
 
-use constant DEBUG    => 1;
+use constant DEBUG    => 0;
 use constant TAG_LEN  => 1;
 use constant LEN_LEN  => 2;
 
