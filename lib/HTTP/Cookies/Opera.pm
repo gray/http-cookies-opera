@@ -52,7 +52,7 @@ sub load {
             # Reset cookie for new record.
             %cookie = (
                 domain => join('.', reverse @domain_components),
-                path => defined $path ? $path : '/',
+                path => defined $path ? "/$path" : '/',
             );
         }
 
