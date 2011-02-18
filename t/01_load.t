@@ -29,4 +29,10 @@ is(
     'Cookie has right value'
 );
 
+is(
+    $href->{'bing.com'}{'/fd/fb'}{FBB}[1],
+    'R=1&T=1297757622943',
+    'Cookie with path has right value'
+);
+
 done_testing;

@@ -9,7 +9,7 @@ use Carp qw(carp croak);
 our $VERSION = '0.01';
 $VERSION = eval $VERSION;
 
-use constant DEBUG    => 0;
+use constant DEBUG    => 1;
 use constant TAG_LEN  => 1;
 use constant LEN_LEN  => 2;
 
@@ -27,7 +27,7 @@ sub load {
             and TAG_LEN == $tag_len and LEN_LEN == $len_len;
 
     my $now = time;
-    my (@domain_components, $path, %cookie);
+    my (@domain_components, @path_components, %cookie);
 
     while (TAG_LEN == read $fh, my $tag, TAG_LEN) {
         $tag = unpack 'C', $tag;
@@ -39,7 +39,7 @@ sub load {
         }
         # End of path component.
         elsif (0x85 == $tag) {
-            undef $path;
+            pop @path_components;
 
             # Add last constructed cookie as this path will have no more.
             $self->_add_cookie(\%cookie);
@@ -52,7 +52,7 @@ sub load {
             # Reset cookie for new record.
             %cookie = (
                 domain => join('.', reverse @domain_components),
-                path => defined $path ? "/$path" : '/',
+                path   => '/' . join('/', @path_components),
             );
         }
 
@@ -71,7 +71,7 @@ sub load {
         $len == read $fh, my $payload, $len or croak 'bad file';
 
         if    (0x1e == $tag) { push @domain_components, $payload }
-        elsif (0x1d == $tag) { $path = $payload }
+        elsif (0x1d == $tag) { push @path_components, $payload }
         elsif (0x10 == $tag) { $cookie{key} = $payload }
         elsif (0x11 == $tag) { $cookie{val} = $payload }
         elsif (0x12 == $tag) {
