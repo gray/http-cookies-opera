@@ -1,4 +1,7 @@
 Revision history for HTTP-Cookies-Opera
 
+0.02  Fri Feb 18 15:40:57 UTC 2011
+    - Fixed reading of cookie paths.
+
 0.01  Tue Feb 15 08:18:23 UTC 2011
     - Initial distribution.
