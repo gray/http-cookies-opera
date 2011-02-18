@@ -76,7 +76,7 @@ sub load {
         elsif (0x11 == $tag) { $cookie{val} = $payload }
         elsif (0x12 == $tag) {
             # Time is stored in 8 bytes for Opera >=10, 4 bytes for <10.
-            $payload = unpack 8 == $len ? 'x[N]N' : 'N', $payload;
+            $payload = unpack 8 == $len ? 'x4N' : 'N', $payload;
             $cookie{maxage} = $payload - $now;
         }
         elsif (0x1a == $tag) {
