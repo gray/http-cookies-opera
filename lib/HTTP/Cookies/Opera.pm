@@ -206,10 +206,12 @@ sub save {
                 next if defined $expires and time > $expires;
 
                 DEBUG and print "    cookie: $key -> $val\n";
-                print $fh pack 'Cn', 0x3, 17 + length($key) + length($val);
+                print $fh pack 'Cn', 0x3,
+                    17 + length($key) + length($val) + !! $secure;
                 print $fh pack('Cn', 0x10, length($key)), $key;
                 print $fh pack('Cn', 0x11, length($val)), $val;
                 print $fh pack 'Cnx4N', 0x12, 8, $expires;
+                print $fh pack 'C', 0x99 if $secure;
             }
         }
 

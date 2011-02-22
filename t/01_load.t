@@ -9,8 +9,9 @@ my $jar = HTTP::Cookies::Opera->new(file => $file);
 isa_ok($jar, 'HTTP::Cookies::Opera');
 
 my %domains = qw(
-    google.com   2
     bing.com     4
+    github.com   2
+    google.com   2
     www.bing.com 1
     yahoo.com    1
 );
