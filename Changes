@@ -1,5 +1,8 @@
 Revision history for HTTP-Cookies-Opera
 
+0.03  Tue Feb 22 11:35:04 UTC 2011
+    - Implement save method.
+
 0.02  Fri Feb 18 15:40:57 UTC 2011
     - Fixed reading of cookie paths.
 
