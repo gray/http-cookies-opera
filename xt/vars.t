@@ -7,5 +7,7 @@ eval "use Test::Vars; 1" or do {
 };
 
 all_vars_ok(
-    ignore_vars => [qw( $class )],
+    ignore_vars => [qw(
+        $sort_key $is_cross $version $port $path_spec $secure $rest
+    )],
 );
