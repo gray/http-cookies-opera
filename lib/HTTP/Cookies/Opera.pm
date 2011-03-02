@@ -132,7 +132,7 @@ sub save {
         #
         # TODO: if a domain cookie and a cross-subdomain cookie both exist
         # for the same key, which should take precedence?
-        my $is_cross = length $parts->[-1] ? 0 : pop @$parts || 1;
+        my $is_cross = $parts && length $parts->[-1] ? 0 : pop @$parts || 1;
 
         # Close domain component records for previous domain.
         for (my $i = @prev_domain - 1; 0 <= $i; $i--) {
