@@ -1,5 +1,8 @@
 Revision history for HTTP-Cookies-Opera
 
+0.06  Fri Mar  4 14:38:23 UTC 2011
+    - Fixed an occasionally failing test.
+
 0.05  Wed Mar  2 14:00:15 UTC 2011
     - Replaced broken cookie file to fix tests.
     - Prevented uninitialized value warning for Perl < 5.12.
