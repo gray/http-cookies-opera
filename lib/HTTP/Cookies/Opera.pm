@@ -28,7 +28,6 @@ sub load {
         unless FILE_VER == $file_ver >> 12 and APP_VER == $app_ver >> 12
             and TAG_LEN == $tag_len and LEN_LEN == $len_len;
 
-    my $now = time;
     my (@domain_parts, @path_parts, %cookie);
 
     while (TAG_LEN == read $fh, my $tag, TAG_LEN) {
@@ -79,7 +78,7 @@ sub load {
         elsif (0x12 == $tag) {
             # Time is stored in 8 bytes for Opera >=10, 4 bytes for <10.
             $payload = unpack 8 == $len ? 'x4N' : 'N', $payload;
-            $cookie{maxage} = $payload - $now;
+            $cookie{expires} = $payload;
         }
         elsif (0x1a == $tag) {
             # Version- not yet seen.
@@ -95,11 +94,20 @@ sub load {
 
 sub _add_cookie {
     my ($self, $cookie) = @_;
+
     return unless exists $cookie->{key};
+    my ($domain, $path, $key) = @$cookie{qw(domain path key)};
+
     $self->set_cookie(
-        undef, @$cookie{qw(key val path domain)}, undef, undef,
-        @$cookie{qw(secure maxage)}, undef, undef
+        undef, $key, $cookie->{val}, $path, $domain, undef, undef,
+        $cookie->{secure}, undef, undef, undef
     );
+
+    # Set the expires value directly instead of letting set_cookie() do it.
+    # This avoids two redundant calls to time() and prevents a possible
+    # discrepancy between the loaded() and saved() values of the expire
+    # time.
+    $self->{COOKIES}{$domain}{$path}{$key}[5] = $cookie->{expires};
 }
 
 sub save {
