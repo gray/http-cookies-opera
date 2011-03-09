@@ -9,7 +9,7 @@ use Carp qw(croak);
 our $VERSION = '0.06';
 $VERSION = eval $VERSION;
 
-use constant DEBUG    => 0;
+use constant DEBUG    => $ENV{HTTP_COOKIES_OPERA_DEBUG} || 0;
 use constant FILE_VER => 1;
 use constant APP_VER  => 2;
 use constant TAG_LEN  => 1;
