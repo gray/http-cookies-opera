@@ -79,6 +79,7 @@ sub load {
             # Time is stored in 8 bytes for Opera >=10, 4 bytes for <10.
             $payload = unpack 8 == $len ? 'x4N' : 'N', $payload;
             $cookie{expires} = $payload;
+            DEBUG and $payload = scalar localtime $payload;
         }
         elsif (0x1a == $tag) {
             # Version- not yet seen.
@@ -211,7 +212,10 @@ sub save {
                 ) = @$aref;
 
                 next if $discard and not $self->{ignore_discard};
-                next if defined $expires and time > $expires;
+                if (defined $expires and time > $expires) {
+                    DEBUG and print "    expired cookie: $key\n";
+                    next;
+                }
 
                 DEBUG and print "    cookie: $key -> $val\n";
                 print $fh pack 'Cn', 0x3,
