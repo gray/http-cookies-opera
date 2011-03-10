@@ -78,7 +78,7 @@ sub load {
         elsif (0x12 == $tag) {
             # Time is stored in 8 bytes for Opera >=10, 4 bytes for <10.
             $payload = unpack 8 == $len ? 'x4N' : 'N', $payload;
-            $cookie{expires} = $payload;
+            $cookie{maxage} = $payload - time;
             DEBUG and $payload = scalar localtime $payload;
         }
         elsif (0x1a == $tag) {
@@ -97,18 +97,11 @@ sub _add_cookie {
     my ($self, $cookie) = @_;
 
     return unless exists $cookie->{key};
-    my ($domain, $path, $key) = @$cookie{qw(domain path key)};
 
     $self->set_cookie(
-        undef, $key, $cookie->{val}, $path, $domain, undef, undef,
-        $cookie->{secure}, undef, undef, undef
+        undef, @$cookie{qw(key val path domain)}, undef, undef,
+        @$cookie{qw(secure maxage)}, undef, undef
     );
-
-    # Set the expires value directly instead of letting set_cookie() do it.
-    # This avoids two redundant calls to time() and prevents a possible
-    # discrepancy between the loaded() and saved() values of the expire
-    # time.
-    $self->{COOKIES}{$domain}{$path}{$key}[5] = $cookie->{expires};
 }
 
 sub save {
