@@ -6,7 +6,7 @@ use warnings;
 use parent qw(HTTP::Cookies);
 use Carp qw(croak);
 
-our $VERSION = '0.06';
+our $VERSION = '0.07';
 $VERSION = eval $VERSION;
 
 use constant DEBUG    => $ENV{HTTP_COOKIES_OPERA_DEBUG} || 0;
