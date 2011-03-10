@@ -10,7 +10,7 @@ isa_ok($jar, 'HTTP::Cookies::Opera');
 
 my %domains = qw(
     bing.com     4
-    github.com   2
+    github.com   1
     google.com   2
     www.bing.com 1
     yahoo.com    1
