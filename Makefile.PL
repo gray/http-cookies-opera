@@ -12,7 +12,10 @@ my %conf = (
         'HTTP::Cookies' => 0,
         'parent'        => 0,
     },
-    BUILD_REQUIRES => { 'Test::More' => 0.82, },
+    BUILD_REQUIRES => {
+        'Test::More' => 0.82,
+        'Time::Fake' => 0,
+    },
     META_MERGE     => {
         resources => {
             repository => 'http://github.com/gray/http-cookies-opera',

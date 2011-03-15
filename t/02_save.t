@@ -1,6 +1,7 @@
 use strict;
 use warnings;
 use Test::More;
+use Time::Fake '1300000000';
 use HTTP::Cookies::Opera;
 
 my $load_file = 't/cookies4.dat';

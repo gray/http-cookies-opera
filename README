@@ -18,6 +18,7 @@ This module requires these other modules and libraries:
 
     HTTP::Cookies
     Test::More
+    Time::Fake
     parent
 
 COPYRIGHT AND LICENCE
