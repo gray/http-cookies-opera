@@ -252,7 +252,7 @@ can C<load()> and C<save()> Opera cookie files.
 
 L<HTTP::Cookies>
 
-L<http://replay.waybackmachine.org/http://www.opera.com/docs/fileformats/>
+L<http://www.opera.com/docs/operafiles/#cookies>
 
 =head1 REQUESTS AND BUGS
 
