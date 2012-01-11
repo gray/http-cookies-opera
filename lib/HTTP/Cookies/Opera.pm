@@ -9,7 +9,7 @@ use Carp qw(croak);
 our $VERSION = '0.07';
 $VERSION = eval $VERSION;
 
-use constant DEBUG    => $ENV{HTTP_COOKIES_OPERA_DEBUG} || 0;
+use constant DEBUG    => !! $ENV{HTTP_COOKIES_OPERA_DEBUG};
 use constant FILE_VER => 1;
 use constant APP_VER  => 2;
 use constant TAG_LEN  => 1;
@@ -118,8 +118,7 @@ sub save {
     # components (i.e. com -> opera -> www).
     my @domains = sort { $a->[0] cmp $b->[0] } map  {
         # Do not split IP addresses into components.
-        my @parts = $_ =~ /^\d+\.\d+\.\d+\.\d+$/
-            ? ($_) : reverse split '\.', $_;
+        my @parts = /^(?:\d+\.){3}\d+$/ ? ($_) : reverse split '\.';
         [ join('.', @parts), $_, \@parts ]
     } keys %{$self->{COOKIES}};
 
