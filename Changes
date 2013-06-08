@@ -1,5 +1,10 @@
 Revision history for HTTP-Cookies-Opera
 
+0.08  Sat Jun  8 05:28:28 UTC 2013
+    - Faked the current time in tests so they will not fail in the
+      future (2036) or on systems with misconfigured times.
+    - Updated link to opera cookie file format.
+
 0.07  Thu Mar 10 01:09:14 UTC 2011
     - Prevented loading of expired cookies.
 
